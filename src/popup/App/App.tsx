@@ -61,41 +61,41 @@ function App() {
   }
 
   return (
-    <>
       <div className="centerBox">
-        Share & Download URL
+        <h4>Share & Download URL</h4>
+        <div>
+          {displayQr ? (
+            <>
+              <div style={{ padding: '10px', borderRadius: '15px', border: '2px solid #0a66c2', display: 'inline-block', backgroundColor: '#fbfbfb' }}>
+                <QRCodeCanvas
+                  id="qrCode"
+                  value={url}
+                  size={300}
+                  bgColor={"#fbfbfb"}
+                  level={"H"}
+                  ref={canvasRef}
+                />
+              </div>
+              {/* <p>{url}</p> */}
+              <input  id="text-box" type="text" value={url} />
+              <div className="custom-button-flex">
+                <button onClick={() => copy(url)}>Copy</button>
+                <form onSubmit={downloadQRCode}>
+                  <button type="submit" disabled={!url}>
+                    Download QR code
+                  </button>
+                </form>
+              </div>
+              <div className="copy">
+                <p>{copySuccess}</p>
+              </div>
+            </>
+          ) : (
+            <p className="errorContent">Not Available for this Page.</p>
+          )}
+        </div>
       </div>
-      <div style={{ background: 'white', padding: '16px' }}>
-        {displayQr === true ?
-          <>
-            <QRCodeCanvas
-              id="qrCode"
-              value={url}
-              size={300}
-              bgColor={"#fbfbfb"}
-              level={"H"}
-              ref={canvasRef}
-            />
-            <p>{url}</p>
-
-            <div className="custom-button-flex">
-              <button onClick={() => copy(url)}>Copy</button>
-              &nbsp;
-              <form onSubmit={downloadQRCode}>
-                <button type="submit" disabled={!url}>
-                  Download QR code
-                </button>
-              </form>
-            </div>
-            <div>
-            {copySuccess}
-            </div>
-          </>
-          : <p className="errorContent">Please Open any website.</p>}
-      </div>
-    </>
   );
-}
-
+};
 
 export default App;

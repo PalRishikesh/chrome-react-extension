@@ -17,14 +17,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-app-rewired build",
-    "build2": "set \"INLINE_RUNTIME_CHUNK=false\" && react-app-rewired build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build2": "set \"INLINE_RUNTIME_CHUNK=false\" && react-app-rewired build"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -42,7 +39,9 @@
   "devDependencies": {
     "@types/chrome": "^0.0.270",
     "@types/webextension-polyfill": "^0.12.1",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
     "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.2.1"
+    "react-app-rewired": "^2.2.1",
+    "typescript": "^5.5.4"
   }
 }

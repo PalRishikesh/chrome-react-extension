@@ -1,18 +1,67 @@
-
-
-
-.centerBox {
-  width: 100%;
-  color: #0a66c2;
-  font-size: 15px;
-  padding: 5px;
+body {
+  background: linear-gradient(to right, #49494b, #49494b);
 }
 
-.errorContent{
+.app {
+  background-color: #2f2a2a;
+  border-radius: 15px; /* Smoother rounded corners */
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.centerBox {
+  background-color: #514d4d;
+  border-radius: 15px; /* Make the box corners round */
+  max-width: 350px; /* Limit the width */
+  text-align: center; /* Center the text */
+  color: white;
+  font-size: 16px;
+  padding: 5px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Add a shadow effect */
+}
+
+.errorContent {
   color: #f80a0a;
+  width: 250px;
   font-size: 17px;
   padding: 5px;
 }
-.custom-button-flex{
+
+.custom-button-flex {
   display: flex;
+  justify-content: space-between; /* Space out buttons */
+  padding-top: 10px;
+}
+
+button {
+  background-color: #0a66c2;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Rounded corners for buttons */
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #084a91; /* Darken button on hover */
+}
+#text-box{
+  width: 300px;
+  border-radius: 5px;
+  height: 17px;
+  margin-top: 8px;
+}
+
+.copy{
+  text-align: left;
+  padding-left: 2px;
+}
+
+.copy p{
+  margin: 0px;
 }
