@@ -8,6 +8,7 @@ import QRCode from "react-qr-code";
 function App() {
 
   const [url, setUrl] = useState('');
+  const [displayQr, setDisplayQr] = useState(false);
 
   useEffect(()=>{
 
@@ -20,8 +21,14 @@ const callURIFromTab=()=>{
   chrome.tabs && chrome.tabs.query(queryInfo, tabs => {
 
       const url:any = tabs[0].url;
-
+      console.log("url: ",url);
+      
       setUrl(url);
+      const urlHttp = url?.split(":")[0];
+      const validHttp = ['https','http']
+      if(validHttp.includes(urlHttp)){
+        setDisplayQr(true);
+      }
 
   });
 }
@@ -31,7 +38,7 @@ const callURIFromTab=()=>{
           Hello: {url}
           </div>
           <div style={{ background: 'white', padding: '16px' }}>
-          { url && <QRCode value={url}/>}
+           { displayQr === true ? <QRCode value={url}/> : <h4>Please Open any website.</h4> }
           </div>
         </>
   );
