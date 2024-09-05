@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import './App.css';
 import QRCode from "react-qr-code";
 import { QRCodeCanvas } from "qrcode.react";
-import Button from "./Button";
 
 
 
@@ -11,7 +10,9 @@ function App() {
 
   const [url, setUrl] = useState('');
   const [displayQr, setDisplayQr] = useState(false);
-  const ref: any = useRef();
+  const [copySuccess, setCopySuccess] = useState('');
+
+  const canvasRef: any = useRef();
 
 
   useEffect(() => {
@@ -23,7 +24,6 @@ function App() {
     const queryInfo = { active: true, lastFocusedWindow: true };
 
     chrome.tabs && chrome.tabs.query(queryInfo, tabs => {
-
       const url: any = tabs[0].url;
       console.log("url: ", url);
 
@@ -39,55 +39,63 @@ function App() {
 
   const downloadQRCode = (e) => {
     e.preventDefault();
-    console.log("qrRef: ",ref.current);
-    console.log("qrRef C: ",ref.current);
-    
-    let canvas = ref.current;
-    // let canvas = document.getElementById("qrCode");
-    console.log("canvas: ",canvas);
-    
+
+    let canvas = canvasRef.current;
     let image = canvas.toDataURL("image/png")
+
     let anchor = document.createElement("a");
     anchor.href = image;
     anchor.download = `qr-code.png`;
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
-    setUrl("");
+    // setUrl("");
   };
+
+
+
+
+  function copy(text) {
+    navigator.clipboard.writeText(text)
+    setCopySuccess('Copied!');
+  }
+
   return (
     <>
-      <div className="centerBox" onClick={callURIFromTab}>
-        Hello: {url}
+      <div className="centerBox">
+        Share & Download URL
       </div>
       <div style={{ background: 'white', padding: '16px' }}>
-        {/* { displayQr === true ? <QRCode value={url}   /> : <h4>Please Open any website.</h4> } */}
         {displayQr === true ?
           <>
             <QRCodeCanvas
               id="qrCode"
               value={url}
               size={300}
-              bgColor={"#00ff00"}
+              bgColor={"#fbfbfb"}
               level={"H"}
-              ref={ref} 
+              ref={canvasRef}
             />
-            {/* <Button propClick={downloadQRCode}/> */}
-            <form onSubmit={downloadQRCode}>
-              <label>Enter URL</label>
-              <input
-                type="text"
-                value={url}
-              />
-              <button type="submit" disabled={!url}>
-                Download QR code
-              </button>
-            </form>
+            <p>{url}</p>
+
+            <div className="custom-button-flex">
+              <button onClick={() => copy(url)}>Copy</button>
+              &nbsp;
+              <form onSubmit={downloadQRCode}>
+                <button type="submit" disabled={!url}>
+                  Download QR code
+                </button>
+              </form>
+            </div>
+            <div>
+            {copySuccess}
+            </div>
           </>
-          : <h4>Please Open any website.</h4>}
+          : <p className="errorContent">Please Open any website.</p>}
       </div>
     </>
   );
 }
+
 
 export default App;
