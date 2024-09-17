@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import './App.css';
-import QRCode from "react-qr-code";
 import { QRCodeCanvas } from "qrcode.react";
 
 
@@ -13,12 +12,13 @@ function App() {
   const [copySuccess, setCopySuccess] = useState('');
 
   const canvasRef: any = useRef();
+  // const inputRef: any = useRef();
 
 
   useEffect(() => {
-
     callURIFromTab()
-  })
+   
+  },[])
 
   const callURIFromTab = () => {
     const queryInfo = { active: true, lastFocusedWindow: true };
@@ -28,10 +28,13 @@ function App() {
       console.log("url: ", url);
 
       setUrl(url);
+     
       const urlHttp = url?.split(":")[0];
       const validHttp = ['https', 'http']
       if (validHttp.includes(urlHttp)) {
         setDisplayQr(true);
+        
+        
       }
 
     });
@@ -60,6 +63,15 @@ function App() {
     setCopySuccess('Copied!');
   }
 
+  const updateUrl=(e)=>{
+    console.log("e:" ,e.target.value)
+    // console.log("inputRef.current: ",inputRef.current.value);
+    
+    if(e.target.value !== undefined){
+      setUrl(e.target.value)
+    }
+    
+  }
   return (
       <div className="centerBox">
         <h4>Share & Download URL</h4>
@@ -77,7 +89,8 @@ function App() {
                 />
               </div>
               {/* <p>{url}</p> */}
-              <input  id="text-box" type="text" value={url} />
+                  
+                  <input  id="text-box" type="text" value={url} onChange={updateUrl}  />
               <div className="custom-button-flex">
                 <button onClick={() => copy(url)}>Copy</button>
                 <form onSubmit={downloadQRCode}>
