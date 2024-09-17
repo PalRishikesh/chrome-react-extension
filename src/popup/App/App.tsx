@@ -8,14 +8,15 @@ import { QRCodeCanvas } from "qrcode.react";
 function App() {
 
   const [url, setUrl] = useState('');
-  const [displayQr, setDisplayQr] = useState(false);
+  const [displayQr, setDisplayQr] = useState(true);
   const [copySuccess, setCopySuccess] = useState('');
 
   const canvasRef: any = useRef();
-  // const inputRef: any = useRef();
+  const inputRef: any = useRef();
 
 
   useEffect(() => {
+    inputRef.current.focus()
     callURIFromTab()
    
   },[])
@@ -33,8 +34,9 @@ function App() {
       const validHttp = ['https', 'http']
       if (validHttp.includes(urlHttp)) {
         setDisplayQr(true);
-        
-        
+      }
+      else{
+        setDisplayQr(false)
       }
 
     });
@@ -90,7 +92,7 @@ function App() {
               </div>
               {/* <p>{url}</p> */}
                   
-                  <input  id="text-box" type="text" value={url} onChange={updateUrl}  />
+                  <input  id="text-box" type="text" value={url} onChange={updateUrl} ref={inputRef}  />
               <div className="custom-button-flex">
                 <button onClick={() => copy(url)}>Copy</button>
                 <form onSubmit={downloadQRCode}>
