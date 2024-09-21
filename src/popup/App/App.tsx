@@ -69,9 +69,12 @@ function App() {
     console.log("e:" ,e.target.value)
     // console.log("inputRef.current: ",inputRef.current.value);
     
-    if(e.target.value !== undefined){
-      setUrl(e.target.value)
-    }
+  if (e.target.value  !== undefined && e.target.value .trim() !== "") {
+    setUrl(e.target.value );
+  } else {
+    setUrl("");  // Clear the URL if the value is empty
+    setDisplayQr(false)
+  }
     
   }
   return (
@@ -92,9 +95,9 @@ function App() {
               </div>
               {/* <p>{url}</p> */}
                   
-                  <input  id="text-box" type="text" value={url} onChange={updateUrl} ref={inputRef}  />
+              <input  id="text-box" type="text" value={url} onChange={updateUrl} ref={inputRef} placeholder="Enter URL" />
               <div className="custom-button-flex">
-                <button onClick={() => copy(url)}>Copy</button>
+                <button onClick={() => copy(url)} disabled={!url}>Copy</button>
                 <form onSubmit={downloadQRCode}>
                   <button type="submit" disabled={!url}>
                     Download QR code
